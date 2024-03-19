@@ -1,0 +1,49 @@
+name: home_by_nb
+description: ""
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.1 <4.0.0'
+
+dependencies:
+  carbon_icons: ^0.0.1+2
+  carousel_slider: ^4.2.1
+  cupertino_icons: ^1.0.6
+  dio: ^5.4.1
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  flutter_secure_storage: ^9.0.0
+  google_fonts: ^6.2.1
+  http: ^1.2.1
+  url_launcher: ^6.2.5
+
+dev_dependencies:
+  flutter_lints: ^3.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
+  uses-material-design: true
+  assets:
+    - assets/app/
+    - assets/banners/
+    - assets/products/
+
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Roboto-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Roboto-Thin.ttf
+          weight: 100
+
+flutter_intl:
+  enabled: true
