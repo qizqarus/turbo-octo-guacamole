@@ -28,7 +28,7 @@ class ActiveCardStock extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(4.0),
       ),
-      color: Colors.white,
+      color: const Color.fromRGBO(245, 245, 245, 1),
       child: Column(
         children: [
           Padding(
@@ -129,7 +129,7 @@ class ActiveCardStock extends StatelessWidget {
                       SizedBox(
                         width: 48.0,
                         height: 48.0,
-                        child: Image.network(productImage, fit: BoxFit.cover),
+                        child: Image.asset(productImage, fit: BoxFit.cover),
                       ),
                       const SizedBox(width: 8.0),
                       Expanded(

@@ -92,6 +92,7 @@ class BrandScreen extends StatelessWidget {
                     price: '10.99',
                     imageUrl: 'assets/products/croco.png',
                     discount: 20,
+                    productSKU: "asdasd",
                   );
                 }),
               ),

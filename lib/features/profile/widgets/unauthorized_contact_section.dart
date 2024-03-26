@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:home_by_nb/core/components/custom_button.dart';
+import 'package:home_by_nb/features/profile/widgets/app_launch.dart';
 import 'package:home_by_nb/generated/l10n.dart';
 
-class ContactSection extends StatelessWidget {
-  const ContactSection({super.key});
+class UnauthorizedContactSection extends StatelessWidget {
+  const UnauthorizedContactSection({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final appLaunch = AppLaunch();
     final theme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 10.0),
@@ -22,7 +24,9 @@ class ContactSection extends StatelessWidget {
                 child: AppButton(
                   text: S.of(context).Phone,
                   icon: Icons.phone_outlined,
-                  onPressed: () {},
+                  onPressed: () {
+                    appLaunch.launchPhone();
+                  },
                   backgroundColor: Colors.white,
                   textColor: Colors.black,
                   borderColor: Colors.grey,
@@ -36,7 +40,9 @@ class ContactSection extends StatelessWidget {
                 child: AppButton(
                   text: S.of(context).Email,
                   icon: Icons.mail_outline,
-                  onPressed: () {},
+                  onPressed: () {
+                    appLaunch.launchMail();
+                  },
                   backgroundColor: Colors.white,
                   textColor: Colors.black,
                   borderColor: Colors.grey,

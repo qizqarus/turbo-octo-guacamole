@@ -17,7 +17,7 @@ class MyActivityCardStock extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(4.0),
       ),
-      color: const Color.fromARGB(245, 255, 255, 255),
+      color: const Color.fromRGBO(245, 245, 245, 1),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

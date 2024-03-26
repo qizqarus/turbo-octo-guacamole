@@ -46,7 +46,9 @@ class DeliveryAddressCard extends StatelessWidget {
                 Text(
                   "Delivery address",
                   style: GoogleFonts.roboto(
-                      fontSize: 18, fontWeight: FontWeight.w500),
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black),
                 ),
                 const Spacer(),
                 SizedBox(

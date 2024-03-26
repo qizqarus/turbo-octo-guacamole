@@ -31,8 +31,8 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                     width: widget.width,
                     height: widget.height,
                     child: Center(
-                      child: Image.asset(
-                        item,
+                      child: Image.network(
+                        'https://magento-1194376-4209178.cloudwaysapps.com/pub/media/catalog/product/$item',
                         fit: BoxFit.cover,
                       ),
                     ),

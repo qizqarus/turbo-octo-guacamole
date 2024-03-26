@@ -1,14 +1,51 @@
+// ignore_for_file: library_private_types_in_public_api
+
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:home_by_nb/core/components/custom_button.dart';
 import 'package:home_by_nb/features/home/widgets/brands_section_widget.dart';
 import 'package:home_by_nb/features/home/widgets/search_bar_widget.dart';
-import 'package:home_by_nb/features/main/main_screen.dart';
+import 'package:http/http.dart' as http;
 import 'package:home_by_nb/features/search/widgets/category_item.dart';
-import 'package:home_by_nb/features/search/widgets/section_tile.dart';
-import 'package:home_by_nb/generated/l10n.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
+
+  @override
+  _SearchScreenState createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  late Future<List<Map<String, dynamic>>> futureCategories;
+
+  Future<List<Map<String, dynamic>>> fetchCategories() async {
+    final response = await http.get(
+      Uri.parse(
+        'https://magento-1194376-4209178.cloudwaysapps.com/rest/V1/categories/list?searchCriteria[pageSize]=224',
+      ),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer f6q6hz4nl275uj9u1x6o2jz6amj7vvaq',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseData = jsonDecode(response.body);
+      final List<dynamic> items = responseData['items'];
+      return items
+          .where((category) => category['id'] != 1 && category['id'] != 2)
+          .map<Map<String, dynamic>>(
+              (category) => {'id': category['id'], 'name': category['name']})
+          .toList();
+    } else {
+      throw Exception('Failed to load categories');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    futureCategories = fetchCategories();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,42 +71,30 @@ class SearchScreen extends StatelessWidget {
                   const SearchBarWidget(),
                   const SizedBox(height: 20),
                   const BrandSectionWidget(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                    child: AppButton(
-                      height: 48,
-                      text: S.of(context).SeeAll,
-                      textColor: Colors.black,
-                      backgroundColor: Colors.white,
-                      isOutlined: true,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const MainScreen()),
-                        );
-                      },
-                    ),
-                  ),
                   const SizedBox(height: 20),
-                  SectionTileWidget(title: S.of(context).Popular),
-                  const SizedBox(height: 5),
-                  CategoryItemWidget(title: S.of(context).Shares),
-                  CategoryItemWidget(title: S.of(context).Sets),
-                  CategoryItemWidget(title: S.of(context).ForChristmas),
-                  CategoryItemWidget(title: S.of(context).ForChildren),
-                  CategoryItemWidget(title: S.of(context).Merch),
-                  const SizedBox(height: 12.0),
-                  SectionTileWidget(title: S.of(context).Category),
-                  const SizedBox(height: 5),
-                  CategoryItemWidget(title: S.of(context).Household),
-                  CategoryItemWidget(title: S.of(context).ForBeauty),
-                  CategoryItemWidget(title: S.of(context).Smells),
-                  CategoryItemWidget(title: S.of(context).FoodProducts),
-                  CategoryItemWidget(title: S.of(context).ForHome),
-                  CategoryItemWidget(title: S.of(context).Scooters),
-                  CategoryItemWidget(title: S.of(context).Flowers),
-                  CategoryItemWidget(title: S.of(context).ForCar),
+                  FutureBuilder<List<Map<String, dynamic>>>(
+                    future: futureCategories,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        final categories = snapshot.data ?? [];
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: categories.length,
+                          itemBuilder: (context, index) {
+                            final category = categories[index];
+                            return CategoryItemWidget(title: category['name']);
+                          },
+                        );
+                      }
+                    },
+                  ),
                 ],
               ),
             ),

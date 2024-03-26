@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_brace_in_string_interps
 
 import 'package:flutter/material.dart';
+import 'package:home_by_nb/features/product/views/product_screen.dart';
 
 class ProductCardWidget extends StatelessWidget {
   final String title;
@@ -8,6 +9,7 @@ class ProductCardWidget extends StatelessWidget {
   final String? oldPrice;
   final String imageUrl;
   final double? discount;
+  final String productSKU;
 
   const ProductCardWidget({
     super.key,
@@ -16,6 +18,7 @@ class ProductCardWidget extends StatelessWidget {
     this.oldPrice,
     required this.imageUrl,
     this.discount,
+    required this.productSKU,
   });
 
   @override
@@ -38,7 +41,12 @@ class ProductCardWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/product');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductScreen(productSKU: productSKU),
+          ),
+        );
       },
       child: SizedBox(
         width: 140,
@@ -53,7 +61,7 @@ class ProductCardWidget extends StatelessWidget {
                   height: 140,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage(imageUrl),
+                      image: NetworkImage(imageUrl),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -106,6 +114,8 @@ class ProductCardWidget extends StatelessWidget {
             Text(
               title,
               style: const TextStyle(color: Colors.black),
+              maxLines: 1,
+              textAlign: TextAlign.center,
             ),
           ],
         ),

@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:home_by_nb/core/components/custom_button.dart';
 import 'package:home_by_nb/features/home/widgets/brands_section_widget.dart';
+import 'package:home_by_nb/features/home/widgets/home_page_carousel_widget.dart';
+import 'package:home_by_nb/features/home/widgets/top_product_section_widget.dart';
 import 'package:home_by_nb/features/home/widgets/widget.dart';
 import 'package:home_by_nb/generated/l10n.dart';
 
 class HomeScreen extends StatelessWidget {
   final List<String> imgList = [
-    'assets/banners/fourth.png',
-    'assets/banners/second.png',
-    'assets/banners/third.png',
-    'assets/app/first.png'
+    'wysiwyg/codazon/homebynb/home-banner1.png',
+    'wysiwyg/codazon/homebynb/home-banner2.png',
+    'wysiwyg/codazon/homebynb/home-banner3.png',
+    'wysiwyg/codazon/homebynb/home-banner4.png',
+    'wysiwyg/codazon/homebynb/home-banner5.png',
   ];
 
   HomeScreen({super.key});
@@ -32,7 +35,7 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 children: [
                   const SearchBarWidget(),
-                  CarouselWidget(imgList: imgList),
+                  HomePageCarouselWidget(imgList: imgList),
                   const SizedBox(height: 15),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -46,9 +49,9 @@ class HomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   const PersonalSectionWidget(),
-                  ProductSectionWidget(title: S.of(context).TopProducts),
-                  ProductSectionWidget(title: S.of(context).NewProducts),
-                  ProductSectionWidget(title: S.of(context).RecentlyViewed),
+                  TopProductSectionWidget(title: S.of(context).TopProducts),
+                  TopProductSectionWidget(title: S.of(context).NewProducts),
+                  TopProductSectionWidget(title: S.of(context).RecentlyViewed),
                   const BrandSectionWidget(),
                 ],
               ),

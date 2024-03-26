@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:home_by_nb/core/components/custom_button.dart';
 import 'package:home_by_nb/features/main/main_screen.dart';
+import 'package:home_by_nb/features/order_details/view/order_details_screen.dart';
 
 class OrderCard extends StatelessWidget {
   final String date;
@@ -41,7 +42,7 @@ class OrderCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(4.0),
       ),
-      color: const Color.fromARGB(245, 255, 255, 255),
+      color: const Color.fromRGBO(245, 245, 245, 1),
       child: Column(
         children: [
           Padding(
@@ -68,7 +69,7 @@ class OrderCard extends StatelessWidget {
                               status,
                               style: TextStyle(
                                 color: getStatusColor(status),
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
@@ -90,19 +91,23 @@ class OrderCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    RichText(
-                      text: TextSpan(
-                        style: GoogleFonts.roboto(
-                          fontSize: 16,
-                          color: Colors.black,
-                        ),
-                        children: <TextSpan>[
-                          const TextSpan(text: '€ '),
-                          TextSpan(
-                            text: '$price',
-                            style: const TextStyle(fontWeight: FontWeight.w400),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: RichText(
+                        text: TextSpan(
+                          style: GoogleFonts.roboto(
+                            fontSize: 16,
+                            color: Colors.black,
                           ),
-                        ],
+                          children: <TextSpan>[
+                            const TextSpan(text: '€ '),
+                            TextSpan(
+                              text: '$price',
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.w400),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
@@ -130,7 +135,7 @@ class OrderCard extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const MainScreen()),
+                                              const OrderDetailScreen()),
                                     );
                                   }
                                 },
@@ -152,7 +157,7 @@ class OrderCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             child: Row(
               children: [
                 if (status == "Unpaid") ...[
@@ -161,7 +166,7 @@ class OrderCard extends StatelessWidget {
                     child: AppButton(
                       text: "Pay",
                       onPressed: () {
-                        _showConfirmationDialog(context, "cancel");
+                        // _showConfirmationDialog(context, "cancel");
                       },
                       height: 40,
                     ),
@@ -174,7 +179,7 @@ class OrderCard extends StatelessWidget {
                       backgroundColor: Colors.transparent,
                       height: 40,
                       onPressed: () {
-                        _showConfirmationDialog(context, "cancel");
+                        // _showConfirmationDialog(context, "cancel");
                       },
                     ),
                   ),
@@ -193,7 +198,7 @@ class OrderCard extends StatelessWidget {
                       SizedBox(
                         width: 48.0,
                         height: 48.0,
-                        child: Image.network(productImage, fit: BoxFit.cover),
+                        child: Image.asset(productImage, fit: BoxFit.cover),
                       ),
                       const SizedBox(width: 8.0),
                       Expanded(
@@ -215,49 +220,6 @@ class OrderCard extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  void _showConfirmationDialog(BuildContext context, String action) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          contentPadding: const EdgeInsets.symmetric(vertical: 20.0),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(4.0),
-          ),
-          content: Text(
-            "Are you sure you want to cancel order?",
-            style:
-                GoogleFonts.roboto(fontSize: 16, fontWeight: FontWeight.w500),
-            textAlign: TextAlign.center,
-          ),
-          actions: <Widget>[
-            AppButton(
-              fontSize: 14,
-              text: "Yes",
-              width: 90,
-              textColor: Colors.black,
-              backgroundColor: Colors.transparent,
-              onPressed: () {
-                Navigator.of(context).pop();
-                if (action == "pay") {
-                } else if (action == "cancel") {}
-              },
-            ),
-            AppButton(
-              text: "No",
-              fontSize: 14,
-              width: 90,
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 }
